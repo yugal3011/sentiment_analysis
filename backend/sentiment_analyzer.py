@@ -33,7 +33,7 @@ class SentimentAnalyzer:
     3. TextBlob as fallback
     """
 
-       def __init__(self):
+   def __init__(self):
         self.model = None
         self.model_confidence_threshold = 0.65  # Trust model if confidence > 65%
 
