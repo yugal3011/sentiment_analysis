@@ -3,7 +3,7 @@ Hybrid Sentiment Analysis System
 Combines keyword-based detection with pre-trained transformer model
 for robust sentiment classification
 """
-
+import os
 from textblob import TextBlob
 from typing import Dict, Tuple
 import logging
@@ -33,12 +33,15 @@ class SentimentAnalyzer:
     3. TextBlob as fallback
     """
 
-    def __init__(self):
+       def __init__(self):
         self.model = None
         self.model_confidence_threshold = 0.65  # Trust model if confidence > 65%
 
-        # Initialize transformer model if available
-        if TRANSFORMERS_AVAILABLE:
+        # Check if we should use lightweight mode (for Render free tier with 512MB RAM limit)
+        use_lightweight = os.getenv('USE_LIGHTWEIGHT_SENTIMENT', 'false').lower() == 'true'
+        
+        # Initialize transformer model if available AND not in lightweight mode
+        if TRANSFORMERS_AVAILABLE and not use_lightweight:
             try:
                 # Use GPU if available
                 device = 0 if torch.cuda.is_available() else -1
@@ -58,6 +61,8 @@ class SentimentAnalyzer:
             except Exception as e:
                 logger.error(f"Failed to load transformer model: {e}")
                 self.model = None
+        elif use_lightweight:
+            logger.info("Using lightweight sentiment analysis (TextBlob + keywords only) for memory optimization")
 
         # Define keyword indicators (fallback and for edge cases)
         self._setup_keyword_indicators()
