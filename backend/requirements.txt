@@ -15,6 +15,7 @@ transformers     # DistilBERT for hybrid sentiment analysis
 # --- Data Processing ---
 scikit-learn     # Pipeline for ML model (optional)
 pandas           # Data manipulation
+openpyxl         # Excel file support for pandas
 joblib           # Model serialization (optional)
 numpy            # Numerical operations
 reportlab        # PDF report generation
