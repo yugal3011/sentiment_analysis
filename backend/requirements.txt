@@ -1,0 +1,27 @@
+# --- Flask Backend ---
+Flask
+Flask-Cors
+Flask-SQLAlchemy
+psycopg2-binary
+python-dotenv
+gunicorn          # Production WSGI server
+
+# --- NLP and Sentiment Analysis ---
+nltk             # Natural Language Toolkit (required by TextBlob)
+textblob
+torch             # Required for transformers (sentiment analysis)
+transformers     # DistilBERT for hybrid sentiment analysis
+
+# --- Data Processing ---
+scikit-learn     # Pipeline for ML model (optional)
+pandas           # Data manipulation
+joblib           # Model serialization (optional)
+numpy            # Numerical operations
+reportlab        # PDF report generation
+
+# --- LLM Integration ---
+google-generativeai  # Google Gemini API client
+
+# --- Testing ---
+pytest            # Testing framework
+
