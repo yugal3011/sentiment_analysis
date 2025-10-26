@@ -86,6 +86,25 @@ class Feedback(db.Model):
 
 with app.app_context():
     db.create_all()
+    
+    # Download TextBlob corpora if not already present (for production deployment)
+    try:
+        import nltk
+        import os
+        nltk_data_dir = os.path.expanduser('~/nltk_data')
+        required_corpora = ['brown', 'punkt_tab', 'wordnet', 'averaged_perceptron_tagger_eng']
+        
+        for corpus in required_corpora:
+            try:
+                nltk.data.find(f'corpora/{corpus}')
+            except LookupError:
+                print(f"Downloading {corpus}...")
+                nltk.download(corpus, quiet=True)
+        
+        print("✅ TextBlob corpora verified")
+    except Exception as e:
+        print(f"⚠️ TextBlob corpora download failed (non-critical): {e}")
+    
     print("✅ Database initialized - Using Gemini API for suggestions")
 
 # Load ML model if present (optional). For large datasets, train via train_model.py
